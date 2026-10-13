@@ -14,4 +14,4 @@ class Usuario(AbstractUser):
     )
 
     def __str__(self):
-        return f"{self.username} - {self.email} - {self.cpf} - {self.first_name} - {self.telefone}"
+        return f"{self.username} - {self.email} - {self.cpf} - {self.telefone}"

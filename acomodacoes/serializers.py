@@ -2,11 +2,10 @@ from rest_framework import serializers
 from decimal import Decimal
 
 from .models import Acomodacao
-from usuarios.serializers import UsuarioSerializer
 
 
 class AcomodacaoSerializer(serializers.ModelSerializer):
-    proprietario = UsuarioSerializer(read_only=True)
+    proprietario = serializers.SerializerMethodField()
 
     class Meta:
         model = Acomodacao
@@ -21,6 +20,14 @@ class AcomodacaoSerializer(serializers.ModelSerializer):
             "max_hospedes",
             "status_hospedagem",
         )
+
+    def get_proprietario(self, obj):
+        # Importacao local que evita o ciclo no momento do carregamento dos arquivos
+        from usuarios.serializers import UsuarioSerializer
+
+        if obj.proprietario:
+            return UsuarioSerializer(obj.proprietario, context=self.context).data
+        return None
 
     def validate_titulo_acomodacao(self, value):
         titulo_limpo = value.strip()

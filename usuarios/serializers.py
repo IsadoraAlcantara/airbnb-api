@@ -1,13 +1,16 @@
 from datetime import date
 import re
 from rest_framework import serializers
+
 from .models import Usuario
+from reservas.serializers import ReservaSerializer
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True, required=True, style={"input_type": "password"}
     )
+    reservas = ReservaSerializer(many=True, read_only=True)
 
     class Meta:
         model = Usuario
@@ -22,6 +25,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "data_inicio_anfitriao",
+            "reservas",
         ]
 
     def criacao_usuario(self, validated_data):
