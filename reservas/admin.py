@@ -5,5 +5,5 @@ from .models import Reserva
 
 @admin.register(Reserva)
 class ReservaAdmin(admin.ModelAdmin):
-    list_display = ("id", "data_inicio", "data_fim", "valor_total")
+    list_display = ("id", "hospede", "data_inicio", "data_fim", "valor_total")
     readonly_fields = ("valor_total",)

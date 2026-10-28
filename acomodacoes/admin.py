@@ -7,6 +7,7 @@ from .models import Acomodacao
 class AcomodacaoAdmin(admin.ModelAdmin):
     list_display = (
         "id",
+        "proprietario",
         "titulo_acomodacao",
         "valor_diaria",
         "qtd_quartos",
