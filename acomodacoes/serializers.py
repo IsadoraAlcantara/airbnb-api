@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from decimal import Decimal
 
-from .models import Acomodacao
+from .models import Acomodacao, Estado, Cidade, Bairro, Endereco
 
 
 class AcomodacaoSerializer(serializers.ModelSerializer):
@@ -43,3 +43,40 @@ class AcomodacaoSerializer(serializers.ModelSerializer):
                 "O valor da diária deve ser maior do que zero"
             )
         return value
+
+class EstadoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Estado
+        fields = (
+            "id",
+            "nome_estado"
+        )
+
+class CidadeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Estado
+        fields = (
+            "id",
+            "nome_cidade"
+        )
+
+class BairroSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bairro
+        fields = (
+            "id",
+            "nome_bairro"
+        )
+
+class EnderecoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Endereco
+        fields = (
+            "id",
+            "nome_logradouro",
+            "numero_endereco"
+        )
