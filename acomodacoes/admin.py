@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Acomodacao, Bairro, Cidade, Endereco, Estado
+from .models import Acomodacao, ImagemAcomodacao
 
 
 @admin.register(Acomodacao)
@@ -16,44 +16,52 @@ class AcomodacaoAdmin(admin.ModelAdmin):
         "max_hospedes",
         "status_hospedagem",
     )
-    search_fields = ("titulo_acomodacao",)
+    list_filter = ("estado", "cidade", "status_hospedagem")
+    search_fields = ("titulo_acomodacao", "cidade", "logradouro")
 
 
-@admin.register(Bairro)
-class BairroAdmin(admin.ModelAdmin):
+@admin.register(ImagemAcomodacao)
+class ImagemAcomodacaoAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "nome_bairro",
-    )
-    search_fields = ("nome_bairro",)
-
-
-@admin.register(Cidade)
-class CidadeAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "nome_cidade",
-    )
-    search_fields = ("nome_cidade",)
-
-
-@admin.register(Endereco)
-class EnderecoAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "nome_logradouro",
-        "numero_endereco",
-    )
-    search_fields = (
-        "nome_logradouro",
-        "numero_endereco",
+        "imagem_acomodacao",
     )
 
+# @admin.register(Bairro)
+# class BairroAdmin(admin.ModelAdmin):
+#     list_display = (
+#         "id",
+#         "nome_bairro",
+#     )
+#     search_fields = ("nome_bairro",)
 
-@admin.register(Estado)
-class EstadoAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "nome_estado",
-    )
-    search_fields = ("nome_estado",)
+
+# @admin.register(Cidade)
+# class CidadeAdmin(admin.ModelAdmin):
+#     list_display = (
+#         "id",
+#         "nome_cidade",
+#     )
+#     search_fields = ("nome_cidade",)
+
+
+# @admin.register(Endereco)
+# class EnderecoAdmin(admin.ModelAdmin):
+#     list_display = (
+#         "id",
+#         "nome_logradouro",
+#         "numero_endereco",
+#     )
+#     search_fields = (
+#         "nome_logradouro",
+#         "numero_endereco",
+#     )
+
+
+# @admin.register(Estado)
+# class EstadoAdmin(admin.ModelAdmin):
+#     list_display = (
+#         "id",
+#         "nome_estado",
+#     )
+#     search_fields = ("nome_estado",)

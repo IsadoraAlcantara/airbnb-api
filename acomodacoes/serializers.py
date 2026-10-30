@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from decimal import Decimal
 
-from .models import Acomodacao, Estado, Cidade, Bairro, Endereco
+from .models import Acomodacao, ImagemAcomodacao
 
 
 class AcomodacaoSerializer(serializers.ModelSerializer):
@@ -22,7 +22,6 @@ class AcomodacaoSerializer(serializers.ModelSerializer):
         )
 
     def get_proprietario(self, obj):
-        # Importacao local que evita o ciclo no momento do carregamento dos arquivos
         from usuarios.serializers import UsuarioSerializer
 
         if obj.proprietario:
@@ -44,39 +43,47 @@ class AcomodacaoSerializer(serializers.ModelSerializer):
             )
         return value
 
-class EstadoSerializer(serializers.ModelSerializer):
+
+class ImagemAcomodacaoSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Estado
-        fields = (
-            "id",
-            "nome_estado"
-        )
+        model = ImagemAcomodacao
+        fields = ("id", "imagem_acomodacao")
 
-class CidadeSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Estado
-        fields = (
-            "id",
-            "nome_cidade"
-        )
+# class EstadoSerializer(serializers.ModelSerializer):
 
-class BairroSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Estado
+#         fields = (
+#             "id",
+#             "nome_estado"
+#         )
 
-    class Meta:
-        model = Bairro
-        fields = (
-            "id",
-            "nome_bairro"
-        )
+# class CidadeSerializer(serializers.ModelSerializer):
 
-class EnderecoSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Estado
+#         fields = (
+#             "id",
+#             "nome_cidade"
+#         )
 
-    class Meta:
-        model = Endereco
-        fields = (
-            "id",
-            "nome_logradouro",
-            "numero_endereco"
-        )
+# class BairroSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = Bairro
+#         fields = (
+#             "id",
+#             "nome_bairro"
+#         )
+
+# class EnderecoSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = Endereco
+#         fields = (
+#             "id",
+#             "nome_logradouro",
+#             "numero_endereco"
+#         )

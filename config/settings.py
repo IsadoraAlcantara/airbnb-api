@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MEDIA_URL = "/media/"
+MEDIA_ENDPOINT = "/media/"  # Usado pelo app uploader para expor a URL
+MEDIA_ROOT = BASE_DIR / "media"
+
 
 # Application definition
 
@@ -40,12 +44,13 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_spectacular",
     "django_filters",
+    "uploader",
     "acomodacoes",
     "usuarios",
     "reservas",
 ]
 
-AUTH_USER_MODEL = 'usuarios.Usuario'
+AUTH_USER_MODEL = "usuarios.Usuario"
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",

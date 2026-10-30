@@ -3,8 +3,8 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.viewsets import ModelViewSet
 
 from .filters import AcomodacaoFilter
-from .models import Acomodacao
-from .serializers import AcomodacaoSerializer
+from .models import Acomodacao, ImagemAcomodacao
+from .serializers import AcomodacaoSerializer, ImagemAcomodacaoSerializer
 
 
 class AcomodacaoViewSet(ModelViewSet):
@@ -15,3 +15,8 @@ class AcomodacaoViewSet(ModelViewSet):
     ordering_fields = ("titulo_acomodacao", "valor_diaria")
     ordering = ("id",)
     search_fields = ("titulo_acomodacao",)
+
+
+class ImagemAcomodacaoViewSet(ModelViewSet):
+    queryset = ImagemAcomodacao.objects.all()
+    serializer_class = ImagemAcomodacaoSerializer
