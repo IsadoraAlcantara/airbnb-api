@@ -13,6 +13,8 @@ class AcomodacaoSerializer(serializers.ModelSerializer):
             "id",
             "proprietario",
             "titulo_acomodacao",
+            "categoria_acomodacao",
+            "tipo_acomodacao",
             "valor_diaria",
             "qtd_quartos",
             "qtd_banheiros",

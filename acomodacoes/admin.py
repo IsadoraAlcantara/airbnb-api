@@ -9,6 +9,8 @@ class AcomodacaoAdmin(admin.ModelAdmin):
         "id",
         "proprietario",
         "titulo_acomodacao",
+        "categoria_acomodacao",
+        "tipo_acomodacao",
         "valor_diaria",
         "qtd_quartos",
         "qtd_banheiros",
@@ -17,7 +19,7 @@ class AcomodacaoAdmin(admin.ModelAdmin):
         "status_hospedagem",
     )
     list_filter = ("estado", "cidade", "status_hospedagem")
-    search_fields = ("titulo_acomodacao", "cidade", "logradouro")
+    search_fields = ("titulo_acomodacao", "categoria_acomodacao", "cidade", "logradouro")
 
 
 @admin.register(ImagemAcomodacao)
