@@ -21,6 +21,12 @@ class AcomodacaoSerializer(serializers.ModelSerializer):
             "qtd_camas",
             "max_hospedes",
             "status_hospedagem",
+            "logradouro",
+            "numero_hospedagem",
+            "bairro",
+            "cidade",
+            "estado",
+            "cep",
         )
 
     def get_proprietario(self, obj):

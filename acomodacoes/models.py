@@ -36,10 +36,10 @@ from django.db import models
 
 class Acomodacao(models.Model):
     class CategoriaAcomodacao(models.TextChoices):
-        ESPACO_INTEIRO = "espaço inteiro"
-        QUARTO_PRIVATIVO = "quarto privativo"
-        QUARTO_HOTEL = "quarto hotel"
-        QUARTO_COMPARTILHADO = "quarto compartilhado"
+        ESPACO_INTEIRO = "Espaço inteiro"
+        QUARTO_PRIVATIVO = "Quarto privativo"
+        QUARTO_HOTEL = "Quarto hotel"
+        QUARTO_COMPARTILHADO = "Quarto compartilhado"
 
     titulo_acomodacao = models.CharField(max_length=100)
     valor_diaria = models.DecimalField(max_digits=10, decimal_places=2)
@@ -53,6 +53,7 @@ class Acomodacao(models.Model):
         default=CategoriaAcomodacao.ESPACO_INTEIRO,
     )
     tipo_acomodacao = models.CharField(max_length=40, default="Casa")
+    descricao_acomodacao = models.CharField(max_length=500, blank=True, null=True)
     status_hospedagem = models.BooleanField(default=True)
 
     logradouro = models.CharField(max_length=150, blank=True, null=True)

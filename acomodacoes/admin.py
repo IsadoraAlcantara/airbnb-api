@@ -19,7 +19,12 @@ class AcomodacaoAdmin(admin.ModelAdmin):
         "status_hospedagem",
     )
     list_filter = ("estado", "cidade", "status_hospedagem")
-    search_fields = ("titulo_acomodacao", "categoria_acomodacao", "cidade", "logradouro")
+    search_fields = (
+        "titulo_acomodacao",
+        "categoria_acomodacao",
+        "cidade",
+        "logradouro",
+    )
 
 
 @admin.register(ImagemAcomodacao)
@@ -28,6 +33,7 @@ class ImagemAcomodacaoAdmin(admin.ModelAdmin):
         "id",
         "imagem_acomodacao",
     )
+
 
 # @admin.register(Bairro)
 # class BairroAdmin(admin.ModelAdmin):
