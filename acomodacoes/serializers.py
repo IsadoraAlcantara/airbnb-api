@@ -2,10 +2,11 @@ from rest_framework import serializers
 from decimal import Decimal
 
 from .models import Acomodacao, ImagemAcomodacao
+from usuarios.serializers import ProprietarioResumidoSerializer
 
 
 class AcomodacaoSerializer(serializers.ModelSerializer):
-    proprietario = serializers.SerializerMethodField()
+    proprietario = ProprietarioResumidoSerializer(read_only=True)
 
     class Meta:
         model = Acomodacao
@@ -57,41 +58,3 @@ class ImagemAcomodacaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImagemAcomodacao
         fields = ("id", "imagem_acomodacao")
-
-
-# class EstadoSerializer(serializers.ModelSerializer):
-
-#     class Meta:
-#         model = Estado
-#         fields = (
-#             "id",
-#             "nome_estado"
-#         )
-
-# class CidadeSerializer(serializers.ModelSerializer):
-
-#     class Meta:
-#         model = Estado
-#         fields = (
-#             "id",
-#             "nome_cidade"
-#         )
-
-# class BairroSerializer(serializers.ModelSerializer):
-
-#     class Meta:
-#         model = Bairro
-#         fields = (
-#             "id",
-#             "nome_bairro"
-#         )
-
-# class EnderecoSerializer(serializers.ModelSerializer):
-
-#     class Meta:
-#         model = Endereco
-#         fields = (
-#             "id",
-#             "nome_logradouro",
-#             "numero_endereco"
-#         )

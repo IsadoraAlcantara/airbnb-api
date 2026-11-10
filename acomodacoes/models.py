@@ -2,37 +2,6 @@ from django.conf import settings
 from uploader.models import Image
 from django.db import models
 
-# class Estado(models.Model):
-#     nome_estado = models.CharField(max_length=50)
-
-#     def __str__(self):
-#         return f"{self.nome_estado}"
-
-
-# class Cidade(models.Model):
-#     cod_estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
-#     nome_cidade = models.CharField(max_length=100)
-
-#     def __str__(self):
-#         return f"{self.nome_cidade}"
-
-
-# class Bairro(models.Model):
-#     cod_cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE)
-#     nome_bairro = models.CharField(max_length=100)
-
-#     def __str__(self):
-#         return f"{self.nome_bairro}"
-
-
-# class Endereco(models.Model):
-#     cod_bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE)
-#     nome_logradouro = models.CharField(max_length=150)
-#     numero_endereco = models.IntegerField()
-
-#     def __str__(self):
-#         return f"{self.nome_logradouro} - {self.numero_endereco}"
-
 
 class Acomodacao(models.Model):
     class CategoriaAcomodacao(models.TextChoices):
@@ -68,9 +37,6 @@ class Acomodacao(models.Model):
         on_delete=models.CASCADE,
         related_name="acomodacoes",
     )
-    # endereco = models.ForeignKey(
-    #     Endereco, on_delete=models.CASCADE, null=True, blank=True
-    # )
     hospedes = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         through="reservas.Reserva",

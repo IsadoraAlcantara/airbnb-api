@@ -3,14 +3,18 @@ import re
 from rest_framework import serializers
 
 from .models import Usuario
-from reservas.serializers import ReservaSerializer
+
+
+class ProprietarioResumidoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = ["id", "username", "email", "first_name", "last_name", "telefone"]
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True, required=True, style={"input_type": "password"}
     )
-    reservas = ReservaSerializer(many=True, read_only=True)
 
     class Meta:
         model = Usuario
@@ -72,9 +76,13 @@ class UsuarioSerializer(serializers.ModelSerializer):
     def validate_data_nascimento(self, value):
         hoje = date.today()
         if value >= hoje:
-            raise serializers.ValidationError("A data de nascimento deve ser pelo menos no dia anterior a hoje")
+            raise serializers.ValidationError(
+                "A data de nascimento deve ser pelo menos no dia anterior a hoje"
+            )
 
-        idade = hoje.year - value.year - ((hoje.month, hoje.day) < (value.month, value.day))
+        idade = (
+            hoje.year - value.year - ((hoje.month, hoje.day) < (value.month, value.day))
+        )
 
         if idade < 18:
             raise serializers.ValidationError("O usuário deve ter pelo menos 18 anos.")

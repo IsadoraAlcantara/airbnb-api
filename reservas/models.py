@@ -12,16 +12,27 @@ class Reserva(models.Model):
     )
     data_inicio = models.DateField(null=True, blank=True)
     data_fim = models.DateField(null=True, blank=True)
-    valor_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
+    valor_total = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
+
+    def clean(self):
+        super().clean()
+        if self.data_fim <= self.data_inicio:
+            raise ValidationError(
+                {"data_fim": "A data final deve ser posterior à data inicial."}
+            )
 
     def save(self, *args, **kwargs):
+        # 1. Roda a validação da model
+        self.full_clean()
+
+        # 2. Calcula o valor total apenas se as datas e a diária existirem
         if self.data_inicio and self.data_fim and self.acomodacao:
             dias = (self.data_fim - self.data_inicio).days
-            if dias <= 0:
-                raise ValidationError(
-                    {"data_fim": "A data final deve ser posterior à data inicial."}
-                )
-            self.valor_total = dias * self.acomodacao.valor_diaria
+            if dias > 0 and hasattr(self.acomodacao, "valor_diaria"):
+                self.valor_total = dias * self.acomodacao.valor_diaria
+
         super().save(*args, **kwargs)
 
     def __str__(self):
