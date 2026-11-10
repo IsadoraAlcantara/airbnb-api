@@ -24,10 +24,7 @@ class Reserva(models.Model):
             )
 
     def save(self, *args, **kwargs):
-        # 1. Roda a validação da model
         self.full_clean()
-
-        # 2. Calcula o valor total apenas se as datas e a diária existirem
         if self.data_inicio and self.data_fim and self.acomodacao:
             dias = (self.data_fim - self.data_inicio).days
             if dias > 0 and hasattr(self.acomodacao, "valor_diaria"):

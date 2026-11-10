@@ -20,6 +20,7 @@ class ReservaSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "acomodacao",
+            "hospede",
             "data_inicio",
             "data_fim",
             "valor_total",
@@ -31,7 +32,6 @@ class ReservaSerializer(serializers.ModelSerializer):
         return representation
 
     def validate(self, attrs):
-        # 1. Recupera as datas tratadas pelo DRF
         data_inicio = attrs.get("data_inicio") or (
             self.instance.data_inicio if self.instance else None
         )
@@ -42,7 +42,6 @@ class ReservaSerializer(serializers.ModelSerializer):
             self.instance.acomodacao if self.instance else None
         )
 
-        # REMOVER
         if not data_inicio or not data_fim or not acomodacao:
             raise serializers.ValidationError(
                 {
@@ -52,13 +51,9 @@ class ReservaSerializer(serializers.ModelSerializer):
                 }
             )
 
-        # 2. Pega a data local considerando o TIME_ZONE do settings.py
         hoje = timezone.localdate()
         max_dias_antecedencia = hoje + timedelta(days=MAX_DIAS_ANTECEDENCIA)
 
-        # -------------------------------------------------------------
-        # VALIDAÇÃO 1: Data de início no passado
-        # -------------------------------------------------------------
         if data_inicio < hoje:
             raise serializers.ValidationError(
                 {
@@ -66,21 +61,6 @@ class ReservaSerializer(serializers.ModelSerializer):
                 }
             )
 
-        # REMOVER ##################
-        # -------------------------------------------------------------
-        # VALIDAÇÃO 2: Sequência das datas
-        # -------------------------------------------------------------
-        # if data_fim <= data_inicio:
-        #     raise serializers.ValidationError(
-        #         {"data_fim": "A data de fim deve ser posterior à data de início."}
-        #     )
-        # else: 
-        #     dias = (data_fim - data_inicio).days
-        #     attrs['valor_total'] = dias * acomodacao.valor_diaria
-
-        # -------------------------------------------------------------
-        # VALIDAÇÃO 3: Antecedência máxima
-        # -------------------------------------------------------------
         if data_inicio > max_dias_antecedencia:
             raise serializers.ValidationError(
                 {
@@ -88,9 +68,6 @@ class ReservaSerializer(serializers.ModelSerializer):
                 }
             )
 
-        # -------------------------------------------------------------
-        # VALIDAÇÃO 4: Sobreposição no Banco
-        # -------------------------------------------------------------
         sobreposicao_reserva = Reserva.objects.filter(
             acomodacao=acomodacao,
             data_inicio__lt=data_fim,
