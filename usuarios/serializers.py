@@ -1,6 +1,7 @@
 from datetime import date
 import re
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import Usuario
 
@@ -9,6 +10,19 @@ class ProprietarioResumidoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = ["id", "username", "email", "first_name", "last_name", "telefone"]
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        token['username'] = user.username
+        token['email'] = user.email
+        token['cpf'] = user.cpf
+        token['telefone'] = user.telefone
+        token['is_anfitriao'] = user.data_inicio_anfitriao is not None
+
+        return token
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
@@ -32,8 +46,11 @@ class UsuarioSerializer(serializers.ModelSerializer):
             "reservas",
         ]
 
-    def criacao_usuario(self, validated_data):
-        return Usuario.objects.create_user(**validated_data)
+        read_only_fields = ["id", "data_inicio_anfitriao", "reservas"]
+
+    def create(self, validated_data):
+        usuario = Usuario.objects.create_user(**validated_data)
+        return usuario
 
     def validate_cpf(self, value):
         cpf = re.sub(r"\D", "", value)
@@ -41,16 +58,16 @@ class UsuarioSerializer(serializers.ModelSerializer):
         if len(cpf) != 11:
             raise serializers.ValidationError("O CPF deve conter exatamente 11 dígitos")
 
-        if cpf == cpf[0] * 11:
-            raise serializers.ValidationError("CPF inválido")
+        # if cpf == cpf[0] * 11:
+        #     raise serializers.ValidationError("CPF inválido")
 
-        for i in range(9, 11):
-            soma = sum(int(cpf[num]) * ((i + 1) - num) for num in range(0, i))
-            digito = (soma * 10) % 11
-            if digito == 10:
-                digito = 0
-            if int(cpf[i]) != digito:
-                raise serializers.ValidationError("CPF inválido")
+        # for i in range(9, 11):
+        #     soma = sum(int(cpf[num]) * ((i + 1) - num) for num in range(0, i))
+        #     digito = (soma * 10) % 11
+        #     if digito == 10:
+        #         digito = 0
+        #     if int(cpf[i]) != digito:
+        #         raise serializers.ValidationError("CPF inválido")
 
         return cpf
 

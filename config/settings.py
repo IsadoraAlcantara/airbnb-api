@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,10 +47,22 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "django_filters",
     "uploader",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "acomodacoes",
     "usuarios",
     "reservas",
 ]
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,  # Retorna um novo refresh token ao renovar
+    "BLACKLIST_AFTER_ROTATION": True,  # Invalida o refresh token antigo
+    "UPDATE_LAST_LOGIN": True,  # Atualiza o campo last_login no BD
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+}
 
 AUTH_USER_MODEL = "usuarios.Usuario"
 
@@ -60,6 +73,12 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "acomodacoes.pagination.AcomodacaoPagination",
     "PAGE_SIZE": 10,
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
 SPECTACULAR_SETTINGS = {
@@ -69,7 +88,7 @@ SPECTACULAR_SETTINGS = {
 }
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
