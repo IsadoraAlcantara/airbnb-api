@@ -16,7 +16,13 @@ class AcomodacaoViewSet(ModelViewSet):
     filterset_class = AcomodacaoFilter
     ordering_fields = ("titulo_acomodacao", "valor_diaria")
     ordering = ("id",)
-    search_fields = ("titulo_acomodacao",)
+    search_fields = (
+        "titulo_acomodacao",
+        "descricao_acomodacao",
+        "cidade",
+        "bairro",
+        "tipo_acomodacao",
+    )
 
 
 class ImagemAcomodacaoViewSet(ModelViewSet):
