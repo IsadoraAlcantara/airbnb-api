@@ -11,9 +11,9 @@ MAX_DIAS_ANTECEDENCIA = 365
 
 class ReservaSerializer(serializers.ModelSerializer):
     acomodacao = serializers.PrimaryKeyRelatedField(queryset=Acomodacao.objects.all())
-    valor_total = serializers.DecimalField(
-        max_digits=10, decimal_places=2, read_only=True
-    )
+    # valor_total = serializers.DecimalField(
+    #     max_digits=10, decimal_places=2, read_only=True
+    # )
 
     class Meta:
         model = Reserva
@@ -25,6 +25,7 @@ class ReservaSerializer(serializers.ModelSerializer):
             "data_fim",
             "valor_total",
         )
+        read_only_fields = ["id", "hospede", "valor_total"]
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
