@@ -10,6 +10,9 @@ class AcomodacaoFilter(filters.FilterSet):
     valor_diaria_maximo = filters.NumberFilter(
         field_name="valor_diaria", lookup_expr="lte"
     )
+    qtd_max_hospedes = filters.NumberFilter(
+        field_name="max_hospedes", lookup_expr="gte"
+    )
     qtd_quartos_minimo = filters.NumberFilter(
         field_name="qtd_quartos", lookup_expr="gte"
     )
@@ -26,4 +29,5 @@ class AcomodacaoFilter(filters.FilterSet):
             "qtd_quartos_minimo",
             "qtd_banheiros_minimo",
             "qtd_camas_minimo",
+            "qtd_max_hospedes",
         )
