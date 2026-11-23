@@ -10,6 +10,10 @@ class Acomodacao(models.Model):
         QUARTO_HOTEL = "Quarto hotel"
         QUARTO_COMPARTILHADO = "Quarto compartilhado"
 
+    class Status(models.TextChoices):
+        DRAFT = "DRAFT", "Rascunho"
+        PUBLISHED = "PUBLISHED", "Publicado"
+
     titulo_acomodacao = models.CharField(max_length=100)
     valor_diaria = models.DecimalField(max_digits=10, decimal_places=2)
     qtd_quartos = models.PositiveIntegerField(default=0)
@@ -23,7 +27,9 @@ class Acomodacao(models.Model):
     )
     tipo_acomodacao = models.CharField(max_length=40, default="Casa")
     descricao_acomodacao = models.CharField(max_length=500, blank=True, null=True)
-    status_hospedagem = models.BooleanField(default=True)
+    status_hospedagem = models.BooleanField(
+        choices=Status.choices, default=Status.DRAFT
+    )
 
     logradouro = models.CharField(max_length=150, blank=True, null=True)
     numero_hospedagem = models.CharField(max_length=20, blank=True, null=True)
@@ -52,14 +58,8 @@ class ImagemAcomodacao(models.Model):
         Acomodacao,
         on_delete=models.CASCADE,
     )
-    imagem_acomodacao = models.ForeignKey(
-        Image,
-        on_delete=models.CASCADE,
-        related_name="+",
-        null=True,
-        blank=True,
-        default=None,
-    )
+    imagem = models.ImageField(upload_to="acomodacoes/%Y/%m/", blank=True, null=True)
+    ordem = models.PositiveIntegerField(default=0, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.imagem_acomodacao} - {self.acomodacao}"
+        return f"{self.imagem} - {self.acomodacao}"

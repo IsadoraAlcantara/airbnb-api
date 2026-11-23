@@ -57,4 +57,4 @@ class ImagemAcomodacaoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ImagemAcomodacao
-        fields = ("id", "imagem_acomodacao")
+        fields = ("id", "imagem")

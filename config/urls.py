@@ -22,10 +22,12 @@ from usuarios.views import (
     PerfilUsuarioView,
 )
 from reservas.views import ReservaViewSet
+from acomodacoes.views import ImagemAcomodacaoViewSet
 
 router = DefaultRouter()
 router.register("acomodacoes", AcomodacaoViewSet, basename="acomodacao")
 router.register("reservas", ReservaViewSet, basename="reserva")
+router.register("imagens", ImagemAcomodacaoViewSet, basename="imagem")
 
 urlpatterns = [
     path("admin/", admin.site.urls),

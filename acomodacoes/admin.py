@@ -31,5 +31,5 @@ class AcomodacaoAdmin(admin.ModelAdmin):
 class ImagemAcomodacaoAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "imagem_acomodacao",
+        "imagem",
     )
