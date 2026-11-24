@@ -31,7 +31,6 @@ class AcomodacaoViewSet(ModelViewSet):
 
     @action(detail=False, methods=['get'], url_path='meus-anuncios', permission_classes=[IsAuthenticated])
     def meus_anuncios(self, request):
-        # Filtra apenas as acomodações onde o proprietário é o usuário logado
         minhas_acomodacoes = Acomodacao.objects.filter(
             proprietario=request.user
         ).order_by('-id')
@@ -42,18 +41,15 @@ class AcomodacaoViewSet(ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
-            # Usuário logado vê todas as publicadas + os próprios rascunhos
             return Acomodacao.objects.filter(
                 Q(status_hospedagem=Acomodacao.Status.PUBLISHED) | Q(proprietario=user)
             )
-        # Visitante não logado vê apenas as publicadas
         return Acomodacao.objects.filter(status_hospedagem=Acomodacao.Status.PUBLISHED)
 
     def perform_create(self, serializer):
         serializer.save(proprietario=self.request.user)
 
     def perform_update(self, serializer):
-        # Impede que um usuário logado edite a acomodação de outro anfitrião
         if serializer.instance.proprietario != self.request.user:
             raise PermissionDenied(
                 "Você não tem permissão para editar esta acomodação."
@@ -61,7 +57,6 @@ class AcomodacaoViewSet(ModelViewSet):
         serializer.save()
 
     def perform_destroy(self, instance):
-        # Impede que um usuário logado apague a acomodação de outro anfitrião
         if instance.proprietario != self.request.user:
             raise PermissionDenied(
                 "Você não tem permissão para excluir esta acomodação."
