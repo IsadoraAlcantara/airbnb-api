@@ -24,3 +24,8 @@ requires = ["uv_build>=0.12.22,<0.13.0"]
 build-backend = "uv_build"
 
 post_migrate = "python manage.py graph_models --disable-sort-fields -S -g -o core.png core uploader"
+
+[dependency-groups]
+dev = [
+    "faker>=40.63.0",
+]

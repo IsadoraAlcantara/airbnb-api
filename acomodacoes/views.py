@@ -39,6 +39,11 @@ class AcomodacaoViewSet(ModelViewSet):
         return Response(serializer.data)
 
     def get_queryset(self):
+        if self.action == "list":
+            return Acomodacao.objects.filter(
+                status_hospedagem=Acomodacao.Status.PUBLISHED
+            )
+
         user = self.request.user
         if user.is_authenticated:
             return Acomodacao.objects.filter(
