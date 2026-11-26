@@ -11,9 +11,9 @@ dependencies = [
     "djangorestframework>=3.18.1",
     "drf-spectacular>=0.30.0",
     "pillow>=13.0.0",
-    "python-magic; sys_platform != 'win32'",
-    "python-magic-bin; sys_platform == 'win32'",
+    "python-magic ; sys_platform != 'win32'",
     "djangorestframework-simplejwt>=5.5.1",
+    "python-magic-bin>=0.4.14 ; sys_platform == 'win32'",
 ]
 
 [project.scripts]
