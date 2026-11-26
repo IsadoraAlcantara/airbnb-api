@@ -20,6 +20,7 @@ from usuarios.views import (
     CustomTokenObtainPairView,
     RegistroUsuarioView,
     PerfilUsuarioView,
+    VerificarUsernameView
 )
 from reservas.views import ReservaViewSet
 from acomodacoes.views import ImagemAcomodacaoViewSet
@@ -46,6 +47,7 @@ urlpatterns = [
 
     path('api/usuarios/cadastrar/', RegistroUsuarioView.as_view(), name='cadastrar_usuario'),
     path('api/usuarios/me/', PerfilUsuarioView.as_view(), name='perfil_usuario'),
+    path('api/usuarios/verificar-username/', VerificarUsernameView.as_view(), name='verificar-username'),
 ]
 
 urlpatterns += static(settings.MEDIA_ENDPOINT, document_root=settings.MEDIA_ROOT)

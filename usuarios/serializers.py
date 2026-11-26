@@ -29,6 +29,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True, required=True, style={"input_type": "password"}
     )
+    possui_anuncios = serializers.SerializerMethodField()
 
     class Meta:
         model = Usuario
@@ -44,9 +45,13 @@ class UsuarioSerializer(serializers.ModelSerializer):
             "last_name",
             "data_inicio_anfitriao",
             "reservas",
+            'possui_anuncios'
         ]
 
         read_only_fields = ["id", "data_inicio_anfitriao", "reservas"]
+
+    def get_possui_anuncios(self, obj):
+        return obj.acomodacoes.exists()
 
     def create(self, validated_data):
         usuario = Usuario.objects.create_user(**validated_data)
