@@ -106,7 +106,12 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://airbnb-frontend-flame.vercel.app/"
+    "https://airbnb-frontend-flame.vercel.app",
+    "https://airbnb-frontend-git-main-isadoraalcantaras-projects.vercel.app",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://airbnb-frontend-.*\.vercel\.app$",
 ]
 
 ROOT_URLCONF = "config.urls"
