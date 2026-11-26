@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -24,13 +25,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-6)t7)_ff)2gxm*&+u$&&yjd!=(nev!g82qzl)x%267_oh6oavc"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'isadoraalcantara.pythonanywhere.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 MEDIA_URL = "/media/"
 MEDIA_ENDPOINT = "/media/"  # Usado pelo app uploader para expor a URL
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Application definition
@@ -101,6 +106,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://airbnb-frontend-flame.vercel.app/"
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -169,6 +175,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Email
